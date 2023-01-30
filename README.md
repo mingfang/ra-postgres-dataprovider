@@ -5,7 +5,7 @@ React-Admin Postgres Data Provider
 ```jsx
 import { useEffect, useState } from 'react'
 import { Admin, EditGuesser, ListGuesser, Loading, Resource } from 'react-admin'
-const { Client } = require('pg')
+import { Client } from 'pg'
 import dataProviderFactory from 'ra-postgres-dataprovider'
 
 const DATABASE_URL = 'postgresql://postgres:postgres@postgres:5432/postgres?sslmode=disable'
