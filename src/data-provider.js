@@ -1,10 +1,10 @@
-import { $in, select, update } from 'sql-bricks-postgres'
+import { in as $in, select, update } from 'sql-bricks-postgres'
 
 export default (pg) => ({
   getList: async (resource, params) => {
     const countSql = select('COUNT(*)').from(resource).where(params.filter).toParams()
     const countResult = await pg.query(countSql)
-    const total = countResult.rowCount
+    const total = countResult.rows[0].count
     if (total === 0) return {data: [], total}
 
     const sql = select()
