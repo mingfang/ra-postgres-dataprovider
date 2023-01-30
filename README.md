@@ -38,7 +38,7 @@ import { Client, neonConfig } from '@neondatabase/serverless'
 neonConfig.wsProxy = (host, port) => `wsproxy/v1?address=${host}:${port}`
 neonConfig.useSecureWebSocket = true
 
-const DATABASE_URL = 'postgresql://postgres:postgres@postgres:5432/postgres?sslmode=disable'
+const DATABASE_URL = process.env.DATABASE_URL
 
 export default () => {
   const [dataProvider, setDataProvider] = useState(null)
