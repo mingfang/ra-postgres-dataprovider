@@ -5,8 +5,15 @@ React-Admin Postgres Data Provider
 ```jsx
 import { useEffect, useState } from 'react'
 import { Admin, EditGuesser, ListGuesser, Loading, Resource } from 'react-admin'
-import { Client } from 'pg'
 import dataProviderFactory from 'ra-postgres-dataprovider'
+
+// use node-postgres
+import { Client } from 'pg'
+
+// or use Neon
+import { Client, neonConfig } from '@neondatabase/serverless'
+neonConfig.wsProxy = (host, port) => `wsproxy/v1?address=${host}:${port}`
+neonConfig.useSecureWebSocket = true
 
 const DATABASE_URL = 'postgresql://postgres:postgres@postgres:5432/postgres?sslmode=disable'
 
