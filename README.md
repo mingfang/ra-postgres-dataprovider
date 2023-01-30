@@ -1,6 +1,29 @@
 # ra-postgres-dataprovider
 React-Admin Postgres Data Provider
 
+## Requirements
+[node-postgres](https://github.com/brianc/node-postgres) is server side only.
+
+To work on the client side, then the combination of
+[Neon WSProxy](https://github.com/neondatabase/wsproxy) and
+[Neon Serverless](https://github.com/neondatabase/serverless)
+
+```mermaid
+---
+title: Client-Server Data Flow
+---
+flowchart LR
+  subgraph Client-Side
+    ra([React-Admin])
+    provider[ra-postgres-dataprovider]
+  end
+  subgraph Server-Side
+  proxy[WSProxy]
+  db[(Postgres)]
+  end
+ra-->provider-. WebSocket .->proxy-->db
+```
+
 ## Sample
 ```jsx
 import { useEffect, useState } from 'react'
