@@ -31,10 +31,10 @@ import { Admin, EditGuesser, ListGuesser, Loading, Resource } from 'react-admin'
 import dataProviderFactory from 'ra-postgres-dataprovider'
 
 // use node-postgres
-import { Client } from 'pg'
+import { Pool } from 'pg'
 
 // or use Neon
-import { Client, neonConfig } from '@neondatabase/serverless'
+import { Pool, neonConfig } from '@neondatabase/serverless'
 neonConfig.wsProxy = (host, port) => `wsproxy/v1?address=${host}:${port}`
 neonConfig.useSecureWebSocket = true
 
@@ -45,10 +45,13 @@ export default () => {
 
   useEffect(()=>{
     const startDataProvider = async () => {
-      const client = new Client(DATABASE_URL)
-      await client.connect()
-      await client.query("set schema 'public'")
-      setDataProvider(dataProviderFactory(client));
+      const pool = new Pool({
+        connectionString: DATABASE_URL,
+        max: 2,
+      })
+      await pool.connect()
+      await pool.query("set schema 'public'")
+      setDataProvider(dataProviderFactory(pool));
     }
 
     if (dataProvider === null) {
